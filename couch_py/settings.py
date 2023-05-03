@@ -128,8 +128,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ORIGIN_WHITELIST = [
-    '172.26.*.*',
-    'localhost',
-    '0.0.0.0',
-    '127.0.0.1'
+    'http://172.26.*.*',
+    'http://localhost',
+    'http://0.0.0.0',
+    'http://127.0.0.1'
 ]
