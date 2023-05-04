@@ -132,5 +132,6 @@ CORS_ORIGIN_WHITELIST = [
     'http://172.26.*.*',
     'http://localhost',
     'http://0.0.0.0',
-    'http://127.0.0.1'
+    'http://127.0.0.1',
+    'http://192.168.56.1'
 ]
