@@ -9,12 +9,16 @@ COUCHDB_SERVER = 'http://admin:wza7626222@demo-couchdb:5984'
 # Create your views here.
 @csrf_exempt
 def health_check(request):
-    return JsonResponse(
+    response = JsonResponse(
         status=200,
         data={
             'health check': 'OK'
         }
     )
+    response['Access-Control-Allow-Origin'] = '*'
+    response['Access-Control-Allow-Methods'] = 'GET, POST, PUT, PATCH, DELETE, OPTIONS'
+    response['Access-Control-Allow-Headers'] = 'content'
+    return response
 
 
 @csrf_exempt
@@ -22,7 +26,8 @@ def check_database_connection(request: HttpRequest):
     # connect to couchdb
     couch = couchdb.Server(url=COUCHDB_SERVER)
     couch.resource.credentials = ("admin", "wza7626222")
-    # create a database
-    # db = couch.create('couch_demo')
     response = JsonResponse({'status': 'ok'})
+    response['Access-Control-Allow-Origin'] = '*'
+    response['Access-Control-Allow-Methods'] = 'GET, POST, PUT, PATCH, DELETE, OPTIONS'
+    response['Access-Control-Allow-Headers'] = 'content'
     return response
