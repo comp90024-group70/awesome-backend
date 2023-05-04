@@ -23,6 +23,6 @@ def check_database_connection(request: HttpRequest):
     couch = couchdb.Server(url=COUCHDB_SERVER)
     couch.resource.credentials = ("admin", "wza7626222")
     # create a database
-    db = couch.create('couch_demo')
+    # db = couch.create('couch_demo')
     response = JsonResponse({'status': 'ok'})
     return response
