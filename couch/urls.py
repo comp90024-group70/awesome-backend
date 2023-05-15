@@ -16,9 +16,11 @@ Including another URLconf
 """
 from django.urls import path
 from .views import health_check, check_database_connection
-from .mas import count_docs
+from .mas import count_docs as mas_count
+from .twitter import count_docs as twitter_count
 urlpatterns = [
     path('health', health_check, name='check connection status'),
     path('database_status', check_database_connection, name='check database connection'),
-    path('demo', count_docs, name='count the number of documents in the database')
+    path('twitter_count', twitter_count, name='count the number of documents in the twitter database'),
+    path('mas_count', mas_count, name='count the number of documents in the mastodon database'),
 ]
