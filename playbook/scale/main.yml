@@ -1,0 +1,18 @@
+- name: Deploy other two Mastodon Clients to the worker instance
+  hosts: swarm_workers
+  gather_facts: no
+  vars_files:
+    - group_vars/vars.yml
+  become: yes
+  roles:
+
+    - role: mastodon_nyc
+      tasks:
+        - name: deploy Mastodon Harvester
+          include_tasks: roles/mastodon_nyc/tasks
+
+    - role: mastodon_uk
+      tasks:
+        - name: deploy Mastodon Harvester
+          include_tasks: roles/mastodon_uk/tasks
+

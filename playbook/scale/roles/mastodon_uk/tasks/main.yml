@@ -1,0 +1,30 @@
+- name: Stop and remove existing Mastodon UK harvester
+  community.docker.docker_container:
+    name: mas-uk
+    state: absent
+    force_kill: yes
+
+- name: Remove existing Mastodon UK harvester image
+  community.docker.docker_image:
+    name: mastodon_uk
+    state: absent
+
+- name: Build new Mastodon UK harvester image
+  community.docker.docker_image:
+    name: mastodon_uk
+    build:
+      path: "{{root_path}}{{spiders_path}}/uk"
+      dockerfile: ./Dockerfile
+    source: build
+
+- name: Run Mastodon UK harvester
+  community.docker.docker_container:
+    name: mas-uk
+    image: mastodon_uk:latest
+    state: started
+    recreate: yes
+    pull: false
+    published_ports:
+      - "8012:8012"
+    networks:
+      - name: demo-network

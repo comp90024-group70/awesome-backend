@@ -1,0 +1,37 @@
+- name: Stop and remove existing React app container
+  community.docker.docker_container:
+    name: react-app
+    state: absent
+    force_kill: yes
+- name: Remove existing React app image
+  community.docker.docker_image:
+    name: app1
+    state: absent
+- name: Remove existing node
+  community.docker.docker_image:
+    name: node
+    state: absent
+- name: Remove existing nginx
+  community.docker.docker_image:
+    name: nginx
+    state: absent
+    
+  
+- name: Build new React app image
+  community.docker.docker_image:
+    name: app1
+    build:
+      path: "{{root_path}}{{react_path}}/visual-analysis/visual-analysis-web"
+      dockerfile: "{{root_path}}{{react_path}}/visual-analysis/visual-analysis-web/Dockerfile"
+    source: build
+- name: Run React app container
+  community.docker.docker_container:
+    name: react-app
+    image: app1:latest
+    state: started
+    recreate: yes
+    pull: false
+    published_ports:
+      - "3000:80"
+    networks:
+      - name: demo-network

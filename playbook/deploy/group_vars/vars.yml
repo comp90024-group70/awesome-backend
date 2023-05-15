@@ -1,0 +1,24 @@
+root_path: /home/ubuntu
+react_path: /awesome-frontend
+django_path: /awesome-backend
+spiders_path: /awesome-spiders
+
+docker_username: lewiswang9911
+docker_password: wza7626222
+# CouchDB admin user information
+db_user: admin
+db_password: wza7626222
+availability_zone: melbourne-qh2-uom
+instance_flavor: uom.mse.2c9g
+instance_image: bbaf16f8-2484-48d7-b455-42209cc4b8d2
+instance_key_name: demo1
+instance_network: qh2-uom-internal
+instance_name: demo
+# git repository
+frondend_repo: https://github.com/comp90024-group70/awesome-frontend.git
+backend_repo: https://github.com/comp90024-group70/awesome-backend.git
+spiders_repo: https://github.com/comp90024-group70/awesome-spider.git
+
+num_of_replicas: 3
+swarm_manager: 172.26.131.199
+swarm_workers: [172.26.135.251, 172.26.135.65]

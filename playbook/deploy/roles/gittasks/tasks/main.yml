@@ -1,0 +1,65 @@
+- name: Check if frontend repository exists
+  stat:
+    path: "{{ root_path }}{{ react_path }}"
+  register: frontend_status
+- name: Update basic-react-app
+  git:
+    repo: "{{frondend_repo}}"
+    dest: "{{ root_path }}{{ react_path }}"
+    version: main
+    update: yes
+  when: frontend_status.stat.exists == true
+- name: Clone React repo
+  git:
+    repo: "{{frondend_repo}}"
+    dest: "{{root_path}}{{react_path}}"
+    single_branch: yes
+    version: main
+  when: frontend_status.stat.exists == false
+
+- name: Check if backend repository exists
+  stat:
+    path: "{{ root_path }}{{ django_path }}"
+  register: backend_status
+
+- name: Update basic-django-app
+  git:
+    repo: "{{backend_repo}}"
+    dest: "{{ root_path }}{{ django_path }}"
+    version: main
+    update: yes
+  when: backend_status.stat.exists == true
+
+- name: Clone Django repo
+  git:
+    repo: "{{backend_repo}}"
+    dest: "{{root_path}}{{django_path}}"
+    single_branch: yes
+    version: main
+  when: backend_status.stat.exists == false
+
+- name: Create Network for CouchDB and Django Project
+  community.docker.docker_network:
+    name: demo-network
+    state: present
+
+- name: Check if awesome-spider repository exists
+  stat:
+    path: "{{ root_path }}{{ spiders_path }}"
+  register: spiders_status
+
+- name: Update awesome-spider repo
+  git:
+    repo: "{{spiders_repo}}"
+    dest: "{{ root_path }}{{ spiders_path }}"
+    version: main
+    update: yes
+  when: spiders_status.stat.exists == true
+
+- name: Clone awesome-spider repo
+  git:
+    repo: "{{spiders_repo}}"
+    dest: "{{root_path}}{{spiders_path}}"
+    single_branch: yes
+    version: main
+  when: spiders_status.stat.exists == false

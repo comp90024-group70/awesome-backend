@@ -1,0 +1,16 @@
+- name: Docker swarm tasks
+  hosts: swarm_manager
+  gather_facts: no
+  vars_files:
+    - group_vars/vars.yml
+  become: yes
+  tasks:
+    - name: Remove a swarm manager
+      community.docker.docker_swarm:
+        state: absent
+        force: true
+
+    - name: Ensure Docker Swarm is initialized
+      community.docker.docker_swarm:
+        state: present
+        advertise_addr: "{{ swarm_manager_advertise_addr }}"

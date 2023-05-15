@@ -1,0 +1,30 @@
+- name: Stop and remove existing Mastodon AU harvester
+  community.docker.docker_container:
+    name: mas-au
+    state: absent
+    force_kill: yes
+
+- name: Remove existing Mastodon AU harvester image
+  community.docker.docker_image:
+    name: mastodon_au
+    state: absent
+
+- name: Build new Mastodon AU harvester image
+  community.docker.docker_image:
+    name: mastodon_au
+    build:
+      path: "{{root_path}}{{spiders_path}}/au"
+      dockerfile: ./Dockerfile
+    source: build
+
+- name: Run Mastodon AU harvester
+  community.docker.docker_container:
+    name: mas-au
+    image: mastodon_au:latest
+    state: started
+    recreate: yes
+    pull: false
+    published_ports:
+      - "8010:8010"
+    networks:
+      - name: demo-network

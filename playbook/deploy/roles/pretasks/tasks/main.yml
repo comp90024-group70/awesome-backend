@@ -1,0 +1,26 @@
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install necessary software
+  apt:
+    name:
+      - git
+      - docker.io
+      - nodejs
+      - pip
+    state: present
+
+- name: Install docker package
+  pip:
+    name: docker
+  
+- name: Install jsondiff package
+  pip:
+    name: jsondiff
+    
+- name: Ensure Docker service is running and enabled
+  ansible.builtin.systemd:
+    name: docker
+    state: started
+    enabled: yes

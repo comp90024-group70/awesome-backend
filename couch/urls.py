@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.urls import path
 from .views import health_check, check_database_connection
+from .mas import count_docs
 urlpatterns = [
     path('health', health_check, name='check connection status'),
-    path('database_status', check_database_connection, name='check database connection')
+    path('database_status', check_database_connection, name='check database connection'),
+    path('demo', count_docs, name='count the number of documents in the database')
 ]

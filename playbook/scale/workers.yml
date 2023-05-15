@@ -1,0 +1,28 @@
+- name: Join workers to the swarm
+  hosts: swarm_workers
+  gather_facts: yes
+  vars_files:
+    - group_vars/vars.yml
+  become: yes
+  tasks:
+    - name: Leave the current swarm if already a part of it
+      command: docker swarm leave --force
+      register: leave_swarm
+      failed_when: leave_swarm.rc not in [0, 1]
+      changed_when: leave_swarm.rc == 0
+
+    - name: Get Docker Swarm join token
+      delegate_to: "{{swarm_manager}}"
+      shell: docker swarm join-token -q worker
+      register: swarm_join_token
+
+    - name: Join Docker Swarm as worker
+      shell: "docker swarm join --token {{ swarm_join_token.stdout }} {{swarm_manager_advertise_addr}}"
+      register: join_result
+      
+    - name: Check if node has already joined the swarm
+      assert:
+        that:
+          - join_result.stdout.find("This node is already part of a swarm") != -1 or join_result.stdout.find("This node joined a swarm as a worker") != -1
+        success_msg: "Node successfully joined the Docker Swarm."
+        fail_msg: "Failed to join the Docker Swarm."

@@ -1,0 +1,30 @@
+- name: Stop and remove existing Mastodon NYC harvester
+  community.docker.docker_container:
+    name: mas-nyc
+    state: absent
+    force_kill: yes
+
+- name: Remove existing Mastodon NYC harvester image
+  community.docker.docker_image:
+    name: mastodon_nyc
+    state: absent
+
+- name: Build new Mastodon NYC harvester image
+  community.docker.docker_image:
+    name: mastodon_nyc
+    build:
+      path: "{{root_path}}{{spiders_path}}/nyc"
+      dockerfile: ./Dockerfile
+    source: build
+
+- name: Run Mastodon NYC harvester
+  community.docker.docker_container:
+    name: mas-nyc
+    image: mastodon_nyc:latest
+    state: started
+    recreate: yes
+    pull: false
+    published_ports:
+      - "8011:8011"
+    networks:
+      - name: demo-network

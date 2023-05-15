@@ -1,0 +1,9 @@
+# CouchDB admin user information
+db_user: admin
+db_password: wza7626222
+
+root_path: /home/ubuntu
+spiders_path: /awesome-spiders
+
+swarm_manager: 172.26.136.13
+swarm_manager_advertise_addr: 172.26.136.13:2377

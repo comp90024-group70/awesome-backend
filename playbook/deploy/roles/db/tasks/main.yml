@@ -1,0 +1,29 @@
+- name: Stop and remove existing CouchDB container
+  community.docker.docker_container:
+    name: demo-couchdb
+    state: absent
+    force_kill: yes
+
+- name: Create Docker volume for CouchDB data
+  docker_volume:
+    name: couchdb-data
+
+- name: Stop and remove existing CouchDB container
+  docker_container:
+    name: demo-couchdb
+    state: absent
+    force_kill: yes
+
+- name: Deploy CouchDB container with mounted volume
+  docker_container:
+    name: demo-couchdb
+    image: couchdb:latest
+    state: started
+    pull: yes
+    ports:
+      - "5984:5984"
+    env:
+      COUCHDB_USER: "{{db_user}}"
+      COUCHDB_PASSWORD: "{{db_password}}"
+    volumes:
+      - "couchdb-data:/opt/couchdb/data"

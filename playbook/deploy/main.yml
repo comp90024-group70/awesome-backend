@@ -1,0 +1,38 @@
+- name: Automatic deployment pipeline
+  hosts: swarm_manager,swarm_workers
+  gather_facts: no
+  vars_files:
+    - group_vars/vars.yml
+  become: yes
+  roles:
+    - role: pretasks
+      tasks:
+        - name: pre install software
+          include_tasks: roles/pretasks/tasks
+    
+    - role: gittasks
+      tasks: 
+        - name: git clone / git checkout
+          include_tasks: roles/gittasks/tasks
+    
+    - role: frontend
+      tasks:
+        - name: deploy React App
+          include_tasks: roles/frontend/tasks
+
+
+    - role: backend
+      tasks:
+        - name: deploy Django App
+          include_tasks: roles/backend/tasks
+    
+    - role: db
+      tasks:
+        - name: deploy CouchDB
+          include_tasks: roles/db/tasks
+    
+    - role: mastodon_au
+      tasks:
+        - name: deploy Mastodon Harvester
+          include_tasks: roles/mastodon_au/tasks
+

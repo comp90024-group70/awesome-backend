@@ -1,0 +1,40 @@
+- name: Create MRC instance for further process
+  hosts: localhost
+  gather_facts: no
+  vars_files:
+    - group_vars/vars.yml
+  tasks:
+    - name: Create an MRC instance
+      openstack.cloud.server: 
+        auto_ip: false
+        availability_zone: "{{availability_zone}}"
+        flavor: "{{instance_flavor}}"
+        image: "{{instance_image}}"
+        key_name: "{{instance_key_name}}"
+        network: "{{instance_network}}"
+        name: "{{instance_name}}"
+        security_groups: default,ssh,http_extra,http
+        state: present
+        timeout: 600
+        wait: yes
+      register: os_instance
+
+    - name: Print return information
+      debug:
+        var: os_instance
+
+    - name: Get IP address of new instance
+      set_fact:
+        instance_ip: "{{ os_instance.server.addresses['qh2-uom-internal'][0].addr }}"
+
+    - name: Create hosts file
+      copy:
+        dest: hosts1
+        content: |
+          [mrc_server]
+          {{ instance_ip }}
+        force: yes
+
+    - name: Use instance IP address in subsequent tasks
+      debug:
+        msg: "Instance IP address is {{ lookup('file', 'hosts1') | regex_replace('\\n', '') }}"

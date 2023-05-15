@@ -1,0 +1,42 @@
+- name: Remove a swarm manager
+  community.docker.docker_swarm:
+    state: absent
+    force: true
+
+- name: Ensure Docker Swarm is initialized
+  community.docker.docker_swarm:
+    state: present
+    advertise_addr: "{{ swarm_manager }}"
+
+- name: Get Swarm join token
+  community.docker.docker_swarm_info:
+  register: swarm_info
+
+- name: Join worker1 to the Swarm
+  community.docker.docker_swarm:
+    state: join
+    advertise_addr: "{{ swarm_manager }}"
+    join_token: "{{ swarm_info.swarm_facts.JoinTokens.Worker }}"
+    remote_addrs: ['172.26.135.251:2377']
+
+- name: Join worker2 to the Swarm
+  community.docker.docker_swarm:
+    state: join
+    advertise_addr: "{{ swarm_manager }}"
+    join_token: "{{ swarm_info.swarm_facts.JoinTokens.Worker }}"
+    remote_addrs: ['172.26.135.65:2377']
+
+
+- name: Get info on Docker Swarm and list of registered nodes
+  community.docker.docker_swarm_info:
+    nodes: true
+  register: swarm_info
+
+
+- name: Inform about basic flags
+  ansible.builtin.debug:
+    msg: |
+      Was able to talk to docker daemon: {{ swarm_info.can_talk_to_docker }}
+      Docker in Swarm mode: {{ swarm_info.docker_swarm_active }}
+      This is a Manager node: {{ swarm_info.docker_swarm_manager }}
+      Nodes: {{ swarm_info.nodes }}
