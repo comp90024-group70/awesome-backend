@@ -34,6 +34,12 @@ def count_docs(request: HttpRequest):
         key = row.key
         value = row.value
         res[key] = value
-    return JsonResponse(
-        data=res
+    response = JsonResponse(
+        data={
+            "count": res["null"]
+        }
     )
+    response['Access-Control-Allow-Origin'] = '*'
+    response['Access-Control-Allow-Methods'] = 'GET, POST, PUT, PATCH, DELETE, OPTIONS'
+    response['Access-Control-Allow-Headers'] = 'content'
+    return response
