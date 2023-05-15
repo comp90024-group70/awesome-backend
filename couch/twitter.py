@@ -58,17 +58,15 @@ def get_sentiment_by_state(request: HttpRequest):
     view.sync(db)
     res = {
         "data": [
-            {"sydney": 0.67},
-            {"melbourne": -0.9},
-            {"perth": 0.8}
+            {"country": "sydney",
+             "sentiment": 0.67},
+            {"country": "brisbane",
+             "sentiment": -0.9},
+            {"country": "melbourne",
+             "sentiment": 0.01},
         ]
     }
-    # # 使用view
-    # for row in db.view('sentiment_by_state_view/sentiment_by_state'):
-    #     key = row.key
-    #     value = row.value
-    #     res[key] = value
-    #     # print(row)
+
     response = JsonResponse(
         status=200,
         data=res,
