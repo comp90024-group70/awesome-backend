@@ -18,9 +18,11 @@ from django.urls import path
 from .views import health_check, check_database_connection
 from .mas import count_docs as mas_count
 from .twitter import count_docs as twitter_count
+from .twitter import get_sentiment_by_state
 urlpatterns = [
     path('health', health_check, name='check connection status'),
     path('database_status', check_database_connection, name='check database connection'),
     path('twitter_count', twitter_count, name='count the number of documents in the twitter database'),
     path('mas_count', mas_count, name='count the number of documents in the mastodon database'),
+    path('sentiment', get_sentiment_by_state, name="satisfactory")
 ]
