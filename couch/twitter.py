@@ -12,8 +12,8 @@ server = couchdb.Server(COUCHDB_SERVER)
 server.resource.credentials = ("admin", "wza7626222")
 
 
-@csrf_exempt
 @cors_middleware
+@csrf_exempt
 def sentiment_analysis(request: HttpRequest):
     db = server["twitter_clean"]
     view = db.view('design1/view1')
