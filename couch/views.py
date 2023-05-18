@@ -13,13 +13,11 @@ server.resource.credentials = ("admin", "wza7626222")
 @cors_middleware
 @csrf_exempt
 def health_check(request):
-    couch = couchdb.Server(url=COUCHDB_SERVER)
-    couch.resource.credentials = ("admin", "wza7626222")
     response = JsonResponse(
         status=200,
         data={
             'health check': 'OK',
-            'database': couch.version()
+            'database': server.version()
         }
     )
     return response
@@ -29,10 +27,15 @@ def health_check(request):
 @csrf_exempt
 def sentiment_analysis(request: HttpRequest):
     db = server["twitter_clean"]
-    view = db.view('design1/view1')
+    view = db.view('design2/view1')
     res = []
     for row in view:
-        res.append(row["value"])
+        res.append(
+            {
+                "gcc": row["key"],
+                "sentiment": row["value"][0] / row["value"][1]
+            }
+        )
     return JsonResponse(
         data={'data': res},
         status=200
@@ -93,6 +96,32 @@ def get_sa4_family(request):
 @csrf_exempt
 def get_sa4_job(request):
     db = server["sa4_job"]
+    view = db.view('design1/view1')
+    res = []
+    for row in view:
+        res.append(row["key"])
+    return JsonResponse(
+        data={'data': res},
+        status=200
+    )
+
+
+@cors_middleware
+@csrf_exempt
+def get_twitter_topics(request: HttpRequest):
+    # get query params
+    topic = request.GET.get('topic')
+    if topic == "cov":
+        db = server["twitter_topic_cov"]
+    elif topic == "fam":
+        db = server["twitter_topic_fam"]
+    elif topic == "job":
+        db = server["twitter_topic_job"]
+    else:
+        return JsonResponse(
+            data={'data': []},
+            status=200
+        )
     view = db.view('design1/view1')
     res = []
     for row in view:
