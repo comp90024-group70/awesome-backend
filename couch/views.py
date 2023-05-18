@@ -27,13 +27,13 @@ def health_check(request):
 @csrf_exempt
 def sentiment_analysis(request: HttpRequest):
     db = server["twitter_clean"]
-    view = db.view('design2/view1')
+    view = db.view('design2/view1', group=True)
     res = []
     for row in view:
         res.append(
             {
                 "gcc": row["key"],
-                "sentiment": row["value"][0] / row["value"][1]
+                "sentiment_avg": round(row["value"][0] / row["value"][1], 5)
             }
         )
     return JsonResponse(
