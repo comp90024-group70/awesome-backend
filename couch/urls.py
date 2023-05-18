@@ -15,13 +15,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from .views import health_check, check_database_connection
+from .views import *
 from .mas import count_docs as mas_count
-from .twitter import sentiment_analysis
 
 urlpatterns = [
     path('health', health_check, name='check connection status'),
-    path('database_status', check_database_connection, name='check database connection'),
     path('mas_count', mas_count, name='count the number of documents in the mastodon database'),
-    path('sentiment', sentiment_analysis, name="satisfactory")
+    path('sentiment', sentiment_analysis, name="satisfactory"),
+    path('ado/family', get_ado_family, name='get the ado family'),
+    path('ado/job', get_ado_job, name='get the ado job'),
+    path('sa4/family', get_sa4_family, name='get the sa4 family'),
+    path('sa4/job', get_sa4_job, name='get the sa4 job'),
 ]
