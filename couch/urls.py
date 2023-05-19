@@ -16,11 +16,9 @@ Including another URLconf
 """
 from django.urls import path
 from .views import *
-from .mas import count_docs as mas_count
 
 urlpatterns = [
     path('health', health_check, name='check connection status'),
-    path('mas_count', mas_count, name='count the number of documents in the mastodon database'),
     path('sentiment', sentiment_analysis, name="satisfactory"),
     path('ado/family', get_ado_family, name='get the ado family'),
     path('ado/job', get_ado_job, name='get the ado job'),
