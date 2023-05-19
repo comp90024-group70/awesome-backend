@@ -83,12 +83,26 @@ def get_ado_job(request):
 @csrf_exempt
 def get_sa4_family(request):
     db = server["sa4_family"]
-    view = db.view('design1/view1')
-    res = []
-    for row in view:
-        res.append(row["key"])
+    views = {
+        "disability_support": db.view('design1/disability-support', group=True),
+        "family_tax_benefit": db.view('design1/family-tax-benefit', group=True),
+        "rent_assistant": db.view('design1/rent-assistant', group=True),
+        "youth_allowance": db.view('design1/youth-allowance', group=True),
+    }
+    res = {}
+    for view_name, view in views.items():
+        res[view_name] = {}
+        for row in view:
+            res[view_name][row["key"]] = round(row["value"][0] / row["value"][1], 6)
+    view_keys = list(views.keys())
+    new = {
+        "brisbane": {k: res[k]["brisbane"] for k in view_keys},
+        "perth": {k: res[k]["perth"] for k in view_keys},
+        "sydney": {k: res[k]["sydney"] for k in view_keys},
+        "melbourne": {k: res[k]["melbourne"] for k in view_keys},
+    }
     return JsonResponse(
-        data={'data': res},
+        data={'data': new},
         status=200
     )
 

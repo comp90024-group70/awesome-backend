@@ -1,5 +1,5 @@
 - name: Automatic deployment pipeline
-  hosts: swarm_manager,swarm_workers
+  hosts: swarm_manager
   gather_facts: no
   vars_files:
     - group_vars/vars.yml
@@ -21,18 +21,18 @@
           include_tasks: roles/frontend/tasks
 
 
-    - role: backend
-      tasks:
-        - name: deploy Django App
-          include_tasks: roles/backend/tasks
+    # - role: backend
+    #   tasks:
+    #     - name: deploy Django App
+    #       include_tasks: roles/backend/tasks
     
-    - role: db
-      tasks:
-        - name: deploy CouchDB
-          include_tasks: roles/db/tasks
+    # - role: db
+    #   tasks:
+    #     - name: deploy CouchDB
+    #       include_tasks: roles/db/tasks
     
-    - role: mastodon_au
-      tasks:
-        - name: deploy Mastodon Harvester
-          include_tasks: roles/mastodon_au/tasks
+    # - role: mastodon_au
+    #   tasks:
+    #     - name: deploy Mastodon Harvester
+    #       include_tasks: roles/mastodon_au/tasks
 
