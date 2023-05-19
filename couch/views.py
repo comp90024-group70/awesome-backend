@@ -138,3 +138,17 @@ def get_twitter_topics(request: HttpRequest):
         data={'data': res},
         status=200
     )
+
+
+@cors_middleware
+@csrf_exempt
+def get_treemap(request: HttpRequest):
+    db = server["twitter_treemaps"]
+    view = db.view('design1/view1')
+    res = {}
+    for row in view:
+        res[row["key"]] = row["value"]
+    return JsonResponse(
+        data={'data': res},
+        status=200
+    )
