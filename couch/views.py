@@ -119,13 +119,21 @@ def get_twitter_topics(request: HttpRequest):
         db = server["twitter_topic_job"]
     else:
         return JsonResponse(
-            data={'data': []},
+            data={'data': {}},
             status=200
         )
-    view = db.view('design1/view1')
-    res = []
+    # db = server["twitter_topic_cov_test"]
+    view = db.view('design1/view1', group=True)
+    res = {}
     for row in view:
-        res.append(row["key"])
+        key = row["key"]
+        count = row["value"]
+        gcc, sentiment = key
+        if not res.get(gcc):
+            res[gcc] = {}
+        if not res[gcc].get(sentiment):
+            res[gcc][sentiment] = 0
+        res[gcc][sentiment] += count
     return JsonResponse(
         data={'data': res},
         status=200
