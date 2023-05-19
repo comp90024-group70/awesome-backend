@@ -26,4 +26,5 @@ urlpatterns = [
     path('sa4/job', get_sa4_job, name='get the sa4 job'),
     path('twitter/topics', get_twitter_topics, name='get the twitter topics'),
     path('twitter/treemap', get_treemap, name='get the twitter treemap'),
+    path('mastodon/recent', get_mas, name='get the twitter treemap'),
 ]

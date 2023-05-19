@@ -167,3 +167,18 @@ def get_treemap(request: HttpRequest):
         data={'data': res},
         status=200
     )
+
+
+@cors_middleware
+@csrf_exempt
+def get_mas(request: HttpRequest):
+    db = server["mastodon"]
+
+    # 创建一个临时视图（在实际使用中，您可能希望创建一个持久的设计文档）
+    results = db.view("design1/view1")
+    # 获取最后一条记录
+    last_doc = results.rows[-1].value
+    return JsonResponse(
+        data={'data': last_doc},
+        status=200
+    )
