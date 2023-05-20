@@ -27,4 +27,6 @@ urlpatterns = [
     path('twitter/topics', get_twitter_topics, name='get the twitter topics'),
     path('twitter/treemap', get_treemap, name='get the twitter treemap'),
     path('mastodon/recent', get_mas, name='get the twitter treemap'),
+    path("mastodon/count", mastodon_count, name="get the mastodon count"),
+    path("twitter/count", twitter_count, name="get the twitter clean count"),
 ]

@@ -3,11 +3,15 @@ from django.http import HttpRequest, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import couchdb
 from .common import cors_middleware
+import os
 
-# COUCHDB_SERVER = 'http://admin:wza7626222@demo-couchdb:5984'
-COUCHDB_SERVER = 'http://172.26.132.135:5984'
+
+COUCHDB_DOMAIN = os.environ.get("COUCHDB_DOMAIN", "172.26.131.154")
+COUCHDB_USER = os.environ.get("COUCHDB_USER", "admin")
+COUCHDB_PASSWORD = os.environ.get("COUCHDB_PASSWORD", "wza7626222")
+COUCHDB_SERVER = f'http://{COUCHDB_DOMAIN}:5984'
 server = couchdb.Server(COUCHDB_SERVER)
-server.resource.credentials = ("admin", "wza7626222")
+server.resource.credentials = (COUCHDB_USER, COUCHDB_PASSWORD)
 
 
 # Create your views here.
@@ -180,5 +184,33 @@ def get_mas(request: HttpRequest):
     last_doc = results.rows[-1].value
     return JsonResponse(
         data={'data': last_doc},
+        status=200
+    )
+
+
+@cors_middleware
+@csrf_exempt
+def twitter_count(request: HttpRequest):
+    db = server["twitter_clean"]
+    view = db.view('design2/view2')
+    res = {"count": 0}
+    for row in view:
+        res["count"] += row["value"]
+    return JsonResponse(
+        data={'data': res},
+        status=200
+    )
+
+
+@cors_middleware
+@csrf_exempt
+def mastodon_count(request: HttpRequest):
+    db = server["mastodon"]
+    view = db.view('design1/view2')
+    res = {"count": 0}
+    for row in view:
+        res["count"] += row["value"]
+    return JsonResponse(
+        data={'data': res},
         status=200
     )
