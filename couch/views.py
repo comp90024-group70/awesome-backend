@@ -176,6 +176,27 @@ def get_treemap(request: HttpRequest):
 @csrf_exempt
 def get_mas(request: HttpRequest):
     db = server["mastodon"]
+    # 定义map函数
+    design_doc_id = '_design/design1'
+    if design_doc_id in db and 'view1' in db[design_doc_id]['views']:
+        pass
+    else:
+        map_func = '''function(doc) {
+          if(doc.created_at) {
+            emit(doc.created_at, doc);
+          }
+        }'''
+        # 创建设计文档
+        design_doc = {
+            "_id": "_design/design1",
+            "views": {
+                "view1": {
+                    "map": map_func
+                }
+            }
+        }
+        # 保存设计文档到数据库
+        db.save(design_doc)
     result = db.view("design1/view1", descending=True, limit=1)
     # 获取最后一条记录
     latest_document = result.rows[0].value
@@ -203,7 +224,26 @@ def twitter_count(request: HttpRequest):
 @csrf_exempt
 def mastodon_count(request: HttpRequest):
     db = server["mastodon"]
-    view = db.view('design1/view2')
+    design_doc_id = '_design/design2'
+    if design_doc_id in db and 'view2' in db[design_doc_id]['views']:
+        pass
+    else:
+        map_func = '''function(doc) {
+            emit(doc._id, 1);
+        }'''
+        design_doc = {
+            "_id": "_design/design2",
+            "views": {
+                "view2": {
+                    "map": map_func,
+                    'reduce': '_count'
+                }
+            }
+        }
+        # 保存设计文档到数据库
+
+        db.save(design_doc)
+    view = db.view('design2/view2')
     res = {"count": 0}
     for row in view:
         res["count"] += row["value"]
