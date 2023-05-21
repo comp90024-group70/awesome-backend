@@ -176,24 +176,6 @@ def get_treemap(request: HttpRequest):
 @csrf_exempt
 def get_mas(request: HttpRequest):
     db = server["mastodon"]
-    # 定义map函数
-    map_func = '''function(doc) {
-      if(doc.create_at) {
-        emit(doc.create_at, doc);
-      }
-    }'''
-
-    # 创建设计文档
-    design_doc = {
-        "_id": "_design/my_design_doc",
-        "views": {
-            "my_view": {
-                "map": map_func
-            }
-        }
-    }
-    # 保存设计文档到数据库
-    db.save(design_doc)
     result = db.view("design1/view1", descending=True, limit=1)
     # 获取最后一条记录
     latest_document = result.rows[0].value
