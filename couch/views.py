@@ -5,7 +5,6 @@ import couchdb
 from .common import cors_middleware
 import os
 
-
 COUCHDB_DOMAIN = os.environ.get("COUCHDB_DOMAIN", "172.26.131.154")
 COUCHDB_USER = os.environ.get("COUCHDB_USER", "admin")
 COUCHDB_PASSWORD = os.environ.get("COUCHDB_PASSWORD", "wza7626222")
@@ -177,13 +176,11 @@ def get_treemap(request: HttpRequest):
 @csrf_exempt
 def get_mas(request: HttpRequest):
     db = server["mastodon"]
-
-    # 创建一个临时视图（在实际使用中，您可能希望创建一个持久的设计文档）
-    results = db.view("design1/view1")
+    result = db.view("design1/view1", descending=True, limit=1)
     # 获取最后一条记录
-    last_doc = results.rows[-1].value
+    latest_document = result.rows[0].value
     return JsonResponse(
-        data={'data': last_doc},
+        data={'data': latest_document},
         status=200
     )
 
