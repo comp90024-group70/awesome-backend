@@ -7,22 +7,17 @@
   community.docker.docker_image:
     name: app1
     state: absent
-- name: Remove existing node
-  community.docker.docker_image:
-    name: node
-    state: absent
-- name: Remove existing nginx
-  community.docker.docker_image:
-    name: nginx
-    state: absent
-    
-  
 - name: Build new React app image
   community.docker.docker_image:
     name: app1
     build:
       path: "{{root_path}}{{react_path}}/visual-analysis/visual-analysis-web"
       dockerfile: "{{root_path}}{{react_path}}/visual-analysis/visual-analysis-web/Dockerfile"
+      cache_from:
+        - nginx:latest
+        - node:19-alpine
+      args:
+        REACT_APP_REQUEST_DOMAIN: "{{ target_instance }}"
     source: build
 - name: Run React app container
   community.docker.docker_container:

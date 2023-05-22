@@ -144,5 +144,5 @@ CORS_ORIGIN_WHITELIST = [
     'http://3.25.237.185',
     'https://aws.kittendrinkscoffee.shop',
     'http://aws.kittendrinkscoffee.shop',
-    'http://172.26.136.116/'
+    'http://172.26.136.116'
 ]

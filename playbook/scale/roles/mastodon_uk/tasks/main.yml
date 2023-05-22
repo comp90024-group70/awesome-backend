@@ -15,6 +15,10 @@
     build:
       path: "{{root_path}}{{spiders_path}}/uk"
       dockerfile: ./Dockerfile
+      args:
+        COUCHDB_DOMAIN: 172.26.131.154
+        COUCHDB_USER: admin
+        COUCHDB_PASSWORD: wza7626222
     source: build
 
 - name: Run Mastodon UK harvester

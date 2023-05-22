@@ -9,4 +9,4 @@ and assign environment variables to the command. However, environment variables 
 # Deployment
 Run **docker build** and **docker run** to deploy the service onto any server.
 # Author(s)
-Zian Wang 
+Zian Wang

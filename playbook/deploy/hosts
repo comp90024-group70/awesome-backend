@@ -1,9 +1,12 @@
-[aws-server]
-aws.kittendrinkscoffee.shop ansible_user=ubuntu ansible_verbosity=2
+[aws_server]
+aws.kittendrinkscoffee.shop ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/mykey.pem
 
 [swarm_manager]
-172.26.136.13 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/demo1.pem
+172.26.131.154 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/demo1.pem
 
 [swarm_workers]
-172.26.134.10 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/demo1.pem
+172.26.135.153 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/demo1.pem
 172.26.132.135 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/demo1.pem
+
+[backup_instance]
+172.26.136.116 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/demo1.pem

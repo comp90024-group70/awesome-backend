@@ -1,5 +1,5 @@
 - name: Stop and remove existing Django container
-  community.docker.docker_container: 
+  community.docker.docker_container:
     name: couchpydemo
     state: absent
     force_kill: yes
@@ -13,6 +13,10 @@
     build:
       path: "{{root_path}}{{django_path}}"
       dockerfile: "{{root_path}}{{django_path}}/Dockerfile"
+      args:
+        COUCHDB_DOMAIN: "{{ target_instance }}"
+        COUCHDB_USER: "{{db_user}}"
+        COUCHDB_PASSWORD: "{{db_password}}"
     source: build
 - name: Run Django docker container
   community.docker.docker_container:
@@ -23,6 +27,5 @@
     pull: false
     published_ports:
       - "8000:8000"
-    networks: 
+    networks:
       - name: demo-network
-    
