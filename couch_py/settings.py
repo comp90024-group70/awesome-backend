@@ -33,7 +33,8 @@ ALLOWED_HOSTS = [
     '0.0.0.0',
     'localhost',
     '3.25.237.185',
-    'aws.kittendrinkscoffee.shop'
+    'aws.kittendrinkscoffee.shop',
+    '172.26.136.116'
 ]
 
 
@@ -142,5 +143,6 @@ CORS_ORIGIN_WHITELIST = [
     'http://172.26.135.153',
     'http://3.25.237.185',
     'https://aws.kittendrinkscoffee.shop',
-    'http://aws.kittendrinkscoffee.shop'
+    'http://aws.kittendrinkscoffee.shop',
+    'http://172.26.136.116/'
 ]
