@@ -30,7 +30,7 @@ def health_check(request):
 @cors_middleware
 @csrf_exempt
 def sentiment_analysis(request: HttpRequest):
-    db = server["twitter_clean"]
+    db = server["twitter_clean_temp"]
     view = db.view('design2/view1', group=True)
     res = []
     for row in view:
@@ -194,7 +194,7 @@ def get_mas(request: HttpRequest):
 @cors_middleware
 @csrf_exempt
 def twitter_count(request: HttpRequest):
-    db = server["twitter_clean"]
+    db = server["twitter_clean_temp"]
     view = db.view('design2/view2')
     res = {"count": 0}
     for row in view:

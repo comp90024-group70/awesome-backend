@@ -19,7 +19,7 @@ from .views import *
 
 urlpatterns = [
     path('health', health_check, name='check connection status'),
-    path('sentiment', sentiment_analysis, name="satisfactory"),
+    path('twitter/sentiment', sentiment_analysis, name="satisfactory"),
     path('ado/family', get_ado_family, name='get the ado family'),
     path('ado/job', get_ado_job, name='get the ado job'),
     path('sa4/family', get_sa4_family, name='get the sa4 family'),
