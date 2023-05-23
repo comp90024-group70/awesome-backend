@@ -30,13 +30,19 @@ def health_check(request):
 @cors_middleware
 @csrf_exempt
 def sentiment_analysis(request: HttpRequest):
-    db = server["twitter_clean_temp"]
+    db = server["twitter_clean1"]
     view = db.view('design2/view1', group=True)
     res = []
+    gcc_mapper = {
+        "1gsyd": "sydney",
+        "2gmel": "melbourne",
+        "3gbri": "brisbane",
+        "5gper": "perth"
+    }
     for row in view:
         res.append(
             {
-                "gcc": row["key"],
+                "gcc": gcc_mapper[row["key"]],
                 "sentiment_avg": round(row["value"][0] / row["value"][1], 5)
             }
         )
@@ -194,7 +200,7 @@ def get_mas(request: HttpRequest):
 @cors_middleware
 @csrf_exempt
 def twitter_count(request: HttpRequest):
-    db = server["twitter_clean_temp"]
+    db = server["twitter_clean1"]
     view = db.view('design2/view2')
     res = {"count": 0}
     for row in view:
