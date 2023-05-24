@@ -8,7 +8,7 @@ import os
 COUCHDB_DOMAIN = os.environ.get("COUCHDB_DOMAIN", "172.26.131.154")
 COUCHDB_USER = os.environ.get("COUCHDB_USER", "admin")
 COUCHDB_PASSWORD = os.environ.get("COUCHDB_PASSWORD", "wza7626222")
-COUCHDB_SERVER = f'http://{COUCHDB_DOMAIN}:82'
+COUCHDB_SERVER = f'http://{COUCHDB_DOMAIN}:5984'
 server = couchdb.Server(COUCHDB_SERVER)
 server.resource.credentials = (COUCHDB_USER, COUCHDB_PASSWORD)
 
