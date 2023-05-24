@@ -24,17 +24,17 @@ SECRET_KEY = 'django-insecure-o(l0o%a(gbe4)ts(1dtphc=o+m^d0tyj65tsxsq%y47^3r#ork
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+"""
+master_node: 172.26.131.39
+worker_nodes: [172.26.132.152, 172.26.131.86]
+"""
 ALLOWED_HOSTS = [
-    '172.26.131.154',
-    '172.26.132.135',
-    '172.26.135.153',
     '127.0.0.1',
     '0.0.0.0',
     'localhost',
-    '3.25.237.185',
-    'aws.kittendrinkscoffee.shop',
-    '172.26.136.116'
+    '172.26.131.39',
+    '172.26.132.152',
+    '172.26.131.86'
 ]
 
 
@@ -133,16 +133,12 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ORIGIN_WHITELIST = [
-    'http://172.26.*.*',
     'http://localhost',
     'http://0.0.0.0',
     'http://127.0.0.1',
     'http://192.168.56.1',
-    'http://172.26.131.154',
-    'http://172.26.132.135',
-    'http://172.26.135.153',
-    'http://3.25.237.185',
-    'https://aws.kittendrinkscoffee.shop',
-    'http://aws.kittendrinkscoffee.shop',
-    'http://172.26.136.116'
+    'http://172.26.131.39'
+    'http://172.26.132.152',
+    'http://172.26.131.86',
 ]
+
