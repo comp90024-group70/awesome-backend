@@ -5,7 +5,8 @@ Simply run
 ```bash
 cd playbook/deploy
 ```
-will go to the Ansible playbook directory. Then, you may need to specify private key in **hosts** and server address in **group_vars/vars.yml**. Type
+will go to the Ansible playbook directory. Then, you may need to specify private key in **hosts** and server address in **group_vars/vars.yml**.  You also need to specify **local_path** variable in **group_vars/vars.yml**. This is important since there is a .py file called trigger.py which is executed when the playbook is executed to reset the Masodon database. 
+Type
 ```bash
 ./run.sh
 ```
