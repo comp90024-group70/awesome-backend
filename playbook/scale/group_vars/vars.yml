@@ -4,6 +4,7 @@ db_password: wza7626222
 
 root_path: /home/ubuntu
 spiders_path: /awesome-spiders
-
-swarm_manager: 172.26.136.13
-swarm_manager_advertise_addr: 172.26.136.13:2377
+spiders_repo: https://github.com/comp90024-group70/awesome-spider.git
+swarm_manager: 172.26.131.39
+master_node: 172.26.131.39
+swarm_manager_advertise_addr: 172.26.131.39:2377

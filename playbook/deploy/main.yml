@@ -1,5 +1,5 @@
 - name: Automatic deployment pipeline
-  hosts: aws_server
+  hosts: swarm_manager
   gather_facts: yes
   vars_files:
     - group_vars/vars.yml
@@ -19,7 +19,12 @@
       tasks:
         - name: deploy React App
           include_tasks: roles/frontend/tasks
-
+    
+    - role: nginx
+      tasks:
+        - name: deploy nginx
+          include_tasks: roles/nginx/tasks
+    
     - role: backend
       tasks:
         - name: deploy Django App
@@ -29,6 +34,11 @@
       tasks:
         - name: deploy CouchDB
           include_tasks: roles/db/tasks
+
+    - role: clusters
+      tasks:
+        - name: deploy CouchDB cluster
+          include_tasks: roles/clusters/tasks
     
     - role: mastodon_au
       tasks:

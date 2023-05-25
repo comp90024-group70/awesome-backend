@@ -1,0 +1,20 @@
+- name: Check if awesome-spider repository exists
+  stat:
+    path: "{{ root_path }}{{ spiders_path }}"
+  register: spiders_status
+
+- name: Update awesome-spider repo
+  git:
+    repo: "{{spiders_repo}}"
+    dest: "{{ root_path }}{{ spiders_path }}"
+    version: main
+    update: yes
+  when: spiders_status.stat.exists == true
+
+- name: Clone awesome-spider repo
+  git:
+    repo: "{{spiders_repo}}"
+    dest: "{{root_path}}{{spiders_path}}"
+    single_branch: yes
+    version: main
+  when: spiders_status.stat.exists == false

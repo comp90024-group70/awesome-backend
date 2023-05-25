@@ -24,3 +24,8 @@
     name: docker
     state: started
     enabled: yes
+
+- name: Create Network for CouchDB and Django Project
+  community.docker.docker_network:
+    name: demo-network
+    state: present

@@ -14,7 +14,7 @@
       path: "{{root_path}}{{django_path}}"
       dockerfile: "{{root_path}}{{django_path}}/Dockerfile"
       args:
-        COUCHDB_DOMAIN: "{{ target_instance }}"
+        COUCHDB_DOMAIN: "{{ master_node }}"
         COUCHDB_USER: "{{db_user}}"
         COUCHDB_PASSWORD: "{{db_password}}"
     source: build

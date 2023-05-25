@@ -1,0 +1,11 @@
+- name: Remove current Mastodon database
+  hosts: localhost
+  vars_files:
+    - group_vars/vars.yml
+  tasks:
+    - name: Execute script
+      shell: python3 /Users/lewisan/Desktop/COMP90024/A2/awesome-backend/playbook/deploy/trigger.py
+      environment:
+        COUCHDB_DOMAIN: '{{master_node}}'
+        COUCHDB_USER: admin
+        COUCHDB_PASSWORD: wza7626222

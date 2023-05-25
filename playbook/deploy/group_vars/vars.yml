@@ -19,7 +19,6 @@ frondend_repo: https://github.com/comp90024-group70/awesome-frontend.git
 backend_repo: https://github.com/comp90024-group70/awesome-backend.git
 spiders_repo: https://github.com/comp90024-group70/awesome-spider.git
 
-num_of_replicas: 3
-swarm_manager: 172.26.131.199
-swarm_workers: [172.26.135.251, 172.26.135.65]
-target_instance: 172.26.136.116
+db_cookie: 'swjdiwiddisqiqs'
+master_node: 172.26.131.39
+worker_nodes: [172.26.132.152, 172.26.131.86]
