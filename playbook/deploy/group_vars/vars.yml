@@ -2,7 +2,7 @@ root_path: /home/ubuntu
 react_path: /awesome-frontend
 django_path: /awesome-backend
 spiders_path: /awesome-spiders
-
+local_path: /Users/lewisan/Desktop/COMP90024/A2
 docker_username: lewiswang9911
 docker_password: wza7626222
 # CouchDB admin user information
